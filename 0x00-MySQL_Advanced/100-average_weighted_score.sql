@@ -25,6 +25,7 @@ BEGIN
     -- Optionally, you can store the result in another table, or return it. 
     -- Here, we assume that you want to update a user record with this value. 
 
+    -- Example: Update the user's average weighted score in the users table
     UPDATE users
     SET average_weighted_score = avg_weighted_score
     WHERE id = user_id;
