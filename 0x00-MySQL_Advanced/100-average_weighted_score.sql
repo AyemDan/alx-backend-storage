@@ -12,7 +12,7 @@ BEGIN
     -- Calculate the total weighted score and total weight for the given user_id
     SELECT SUM(score * weight), SUM(weight)
     INTO total_weighted_score, total_weight
-    FROM scores
+    FROM corrections
     WHERE user_id = user_id;
 
     -- Calculate the average weighted score if the total weight is greater than 0
