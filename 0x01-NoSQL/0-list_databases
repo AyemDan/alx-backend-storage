@@ -1,3 +1,2 @@
 //shows databases
-show db
-
+show dbs
