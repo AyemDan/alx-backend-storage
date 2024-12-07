@@ -7,10 +7,7 @@ Functions:
         Updates the topics field of a school document in the collection based on the school name.
 """
 
-from pymongo.collection import Collection
-
-
-def update_topics(mongo_collection: Collection, name: str, topics: list):
+def update_topics(mongo_collection, name: str, topics: list):
     """
     Updates the topics for a school document in the collection based on the provided name.
 

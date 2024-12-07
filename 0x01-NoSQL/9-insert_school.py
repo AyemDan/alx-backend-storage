@@ -6,11 +6,7 @@ Functions:
     insert_school(mongo_collection: Collection, **kwargs) -> Any:
         Inserts a new document into the specified MongoDB collection using the provided fields.
 """
-
-from pymongo.collection import Collection
-
-
-def insert_school(mongo_collection: Collection, **kwargs):
+def insert_school(mongo_collection, **kwargs):
     """
     Inserts a new document into a MongoDB collection based on the provided keyword arguments.
 

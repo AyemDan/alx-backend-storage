@@ -7,10 +7,8 @@ Functions:
         Returns a list of schools that include the specified topic.
 """
 
-from pymongo.collection import Collection
 
-
-def schools_by_topic(mongo_collection: Collection, topic: str) -> list:
+def schools_by_topic(mongo_collection, topic: str) -> list:
     """
     Returns a list of schools that have the specified topic in their 'topics' field.
 
