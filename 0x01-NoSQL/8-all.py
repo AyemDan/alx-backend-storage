@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """ 
-This module provides a function to list all documents in a MongoDB collection.
+This module provides a function to list all documents
+in a MongoDB collection.
 Functions:
-    list_all(mongo_collection: Collection) -> list: 
-    """
+list_all(mongo_collection: Collection) -> list: 
+"""
 
 from pymongo.collection import Collection
 
