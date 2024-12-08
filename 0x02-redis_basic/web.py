@@ -1,21 +1,53 @@
 #!/usr/bin/env python3
 """
-create a web cach
+Fetch and cache web pages with request tracking.
 """
 import redis
 import requests
-rc = redis.Redis()
-count = 0
+from functools import wraps
+from typing import Callable
+
+# Initialize Redis client
+redis_client = redis.Redis()
 
 
+def track_and_cache(ttl: int = 10) -> Callable:
+    """
+    Decorator to track how many times a URL is accessed
+    and cache the HTML result for a specified time-to-live (TTL).
+    """
+    def decorator(method: Callable) -> Callable:
+        @wraps(method)
+        def wrapper(url: str) -> str:
+            count_key = f"count:{url}"
+            cache_key = f"cache:{url}"
+
+            # Increment the count of accesses for the URL
+            redis_client.incr(count_key)
+
+            # Check if the result is already cached
+            cached_response = redis_client.get(cache_key)
+            if cached_response:
+                return cached_response.decode("utf-8")
+
+            # Fetch the page and cache the result
+            response = method(url)
+            redis_client.setex(cache_key, ttl, response)
+            return response
+        return wrapper
+    return decorator
+
+
+@track_and_cache(ttl=10)
 def get_page(url: str) -> str:
-    """ get a page and cach value"""
-    rc.set(f"cached:{url}", count)
-    resp = requests.get(url)
-    rc.incr(f"count:{url}")
-    rc.setex(f"cached:{url}", 10, rc.get(f"cached:{url}"))
-    return resp.text
+    """
+    Fetch the HTML content of a URL and return it.
 
+    Args:
+        url (str): The URL to fetch.
 
-if __name__ == "__main__":
-    get_page('http://slowwly.robertomurray.co.uk')
+    Returns:
+        str: The HTML content of the URL.
+    """
+    response = requests.get(url)
+    return response.text

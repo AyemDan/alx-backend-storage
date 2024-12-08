@@ -66,12 +66,15 @@ class Cache:
             Initialize the Cache class and flush the Redis instance.
         store:
         get:
-                fn (Callable[[bytes], Any], optional): A callable to convert the data.
-                Optional[Union[str, int, bytes]]: The retrieved data, converted if fn is provided.
+                fn (Callable[[bytes], Any], optional):
+                A callable to convert the data.
+                Optional[Union[str, int, bytes]]: The retrieved data,
+                converted if fn is provided.
         get_str:
         get_int:
         count:
-                method_name (str): The name of the method to get the call count for.
+                method_name (str): The name of the method to
+                the call count for.
      """
     def __init__(self):
         """Initialize the Cache class and flush the Redis instance."""
