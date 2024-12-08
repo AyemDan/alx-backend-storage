@@ -28,33 +28,19 @@ def get_nginx_log_stats():
 
     Returns:
         None: Prints the log statistics to the console.
-
-    Example Output:
-        1000 logs
-        Methods:
-            GET: 800
-            POST: 100
-            PUT: 50
-            PATCH: 30
-            DELETE: 20
-        GET /status: 50
     """
-    # Connect to MongoDB
+ 
     client = MongoClient("mongodb://localhost:27017/")
     db = client["logs"]
     collection = db["nginx"]
 
-    # Total number of logs
     total_logs = collection.count_documents({})
 
-    # Count logs by HTTP method
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     method_counts = {method: collection.count_documents({"method": method}) for method in methods}
 
-    # Count logs for "GET /status"
     status_logs = collection.count_documents({"method": "GET", "path": "/status"})
 
-    # Print statistics
     print(f"{total_logs} logs")
     print("Methods:")
     for method in methods:

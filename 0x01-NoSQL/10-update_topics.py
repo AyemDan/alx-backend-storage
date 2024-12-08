@@ -29,9 +29,6 @@ def update_topics(mongo_collection, name: str, topics: list):
     if not isinstance(name, str) or not name.strip():
         raise ValueError("The name parameter must be a non-empty string.")
     
-    if not isinstance(topics, list) or not all(isinstance(topic, str) for topic in topics):
-        raise ValueError("The topics parameter must be a list of strings.")
-    
     mongo_collection.update_one(
         {"name": name},
         {"$set": {"topics": topics}}
