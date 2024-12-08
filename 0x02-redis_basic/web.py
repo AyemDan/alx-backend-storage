@@ -9,6 +9,7 @@ from typing import Callable
 
 redis_client = redis.Redis()
 
+
 def track_and_cache(ttl: int = 10) -> Callable:
     """
     Decorator to track how many times a URL is accessed
@@ -28,6 +29,7 @@ def track_and_cache(ttl: int = 10) -> Callable:
             return response
         return wrapper
     return decorator
+
 
 @track_and_cache(ttl=10)
 def get_page(url: str) -> str:
