@@ -7,9 +7,7 @@ import requests
 from functools import wraps
 from typing import Callable
 
-# Initialize Redis client
 redis_client = redis.Redis()
-
 
 def track_and_cache(ttl: int = 10) -> Callable:
     """
@@ -21,22 +19,15 @@ def track_and_cache(ttl: int = 10) -> Callable:
         def wrapper(url: str) -> str:
             count_key = f"count:{url}"
             cache_key = f"cache:{url}"
-
-            # Increment the count of accesses for the URL
             redis_client.incr(count_key)
-
-            # Check if the result is already cached
             cached_response = redis_client.get(cache_key)
             if cached_response:
                 return cached_response.decode("utf-8")
-
-            # Fetch the page and cache the result
             response = method(url)
             redis_client.setex(cache_key, ttl, response)
             return response
         return wrapper
     return decorator
-
 
 @track_and_cache(ttl=10)
 def get_page(url: str) -> str:
