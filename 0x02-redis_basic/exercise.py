@@ -60,6 +60,19 @@ def replay(method: Callable) -> None:
 
 
 class Cache:
+    """ Cache class for storing and retrieving data from a Redis instance.
+    Methods:
+        __init__:
+            Initialize the Cache class and flush the Redis instance.
+        store:
+        get:
+                fn (Callable[[bytes], Any], optional): A callable to convert the data.
+                Optional[Union[str, int, bytes]]: The retrieved data, converted if fn is provided.
+        get_str:
+        get_int:
+        count:
+                method_name (str): The name of the method to get the call count for.
+     """
     def __init__(self):
         """Initialize the Cache class and flush the Redis instance."""
         self._redis = redis.Redis()
